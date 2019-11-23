@@ -17,10 +17,6 @@ import {
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import validate from 'validate.js';
 import moment from 'moment';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  KeyboardDatePicker, MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
 import { setGoal, setGoalsP } from '../../../../../../../../services/api';
 
 const freq = [
@@ -251,24 +247,21 @@ const AddGoalBtn = props => {
                     md={6}
                     xs={12}
                   >
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <Grid container justify="space-around">
-                        <KeyboardDatePicker
-                          disableToolbar
-                          format="dd/MM/yyyy"
-                          margin="normal"
-                          id="date-picker-inline"
-                          label="Fecha de finalización"
-                          value={selectedDate}
-                          onChange={handleDateChange}
-                          minDate={new Date()}
-                          variant="outlined"
-                          KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                          }}
-                        />
-                      </Grid>
-                    </MuiPickersUtilsProvider>
+                    <TextField
+                      fullWidth
+                      label="Fecha de fin"
+                      margin="dense"
+                      name="dueDate"
+                      onChange={handleChange}
+                      value={formState.values.dueDate || ''}
+                      required
+                      type="date"
+                      defaultValue=""
+                      variant="outlined"
+                      InputLabelProps={{
+                      shrink: true,
+                      }}
+                    />
                   </Grid>
                   <Grid
                     item
