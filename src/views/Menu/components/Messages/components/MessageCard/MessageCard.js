@@ -89,7 +89,7 @@ const MessageCard = props => {
                 display="inline"
                 variant="body2"
                 >
-                    Enviado el: {moment(message.date).format('DD/MM/YYYY')}
+                    Enviado el: {message.date}
                 </Typography>
             </Grid>
             </Grid>

@@ -105,12 +105,19 @@ const InfoMessage = props =>{
 
     var nombre = localStorage.getItem("name") + " " + localStorage.getItem("lastName") 
     
-    handleMessage(localStorage.getItem("p_id"), localStorage.getItem("id"),
+    if(formState.values.subject === undefined){
+
+      window.confirm("Ingrese un asunto para enviar un mensaje")
+    } else {
+      handleMessage(localStorage.getItem("p_id"), localStorage.getItem("id"),
      nombre,formState.values.message,  formState.values.subject,  moment().format('DD/MM/YYYY'))
     
-    formState.values.message=""
-    formState.values.subject=""
-    history.push("/menu");
+      formState.values.message=""
+      formState.values.subject=""
+      history.push("/menu");
+    }
+    
+    
   }
 
   return(

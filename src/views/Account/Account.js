@@ -19,20 +19,12 @@ const Account = () => {
         container
         spacing={4}
       >
+        
         <Grid
           item
-          lg={4}
-          md={6}
-          xl={4}
-          xs={12}
-        >
-          <AccountProfile />
-        </Grid>
-        <Grid
-          item
-          lg={8}
-          md={6}
-          xl={8}
+          lg={12}
+          md={12}
+          xl={12}
           xs={12}
         >
           <AccountDetails />
