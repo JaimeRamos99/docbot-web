@@ -20,6 +20,8 @@ import {
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import ChartGoal from './ChartGoal';
+import palette from '../../../../../../../theme/palette';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -60,11 +62,49 @@ const useStyles = makeStyles(theme => ({
 const SingleGoal = props => {
     const { className, goal, ...rest } = props;
 
+    const [state] = React.useState({
+        goalss: [],
+    });
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
   
     const handleClickOpen = () => {
-      setOpen(true);
+        console.log(goal)
+        const labels=[];
+        const data=[];
+        const color=[ palette.success.main, palette.error.main, palette.secondary.main,  palette.warning.main,  palette.valueH.main];
+        var randomItem = color[Math.floor(Math.random()*color.length)]
+
+        for(var x = 0; x < goal.progress.length; x++){
+            var i = goal.progress[x]
+            if(x === 0){
+                
+                labels.push(goal.creationDate)
+                data.push(i.value)
+            }else {    
+                
+                labels.push(i.date)
+                data.push(i.value)
+            }
+        }
+
+        const info = {
+            labels: labels,
+            datasets:[
+                {
+                    borderColor: randomItem,
+                    data: data,
+                    fill: false,
+                }   
+            ]
+        }
+        state.goalss = info
+        setTimeout(function(){
+            
+            setOpen(true);
+            
+  
+        }, 1000);
     };
   
     const handleClose = () => {
@@ -129,23 +169,27 @@ const SingleGoal = props => {
             </CardActions>
         </Card>
         <Dialog
+            fullWidth={true}
+            maxWidth='lg'
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">{goal.description}</DialogTitle>
+           
             <DialogContent>
             <DialogContentText id="alert-dialog-description">
-                
+                <ChartGoal infor={goal.description} data={state.goalss}/>
             </DialogContentText>
             </DialogContent>
             <DialogActions>
-            <Button onClick={handleClose} color="primary">
-                Disagree
-            </Button>
-            <Button onClick={handleClose} color="primary" autoFocus>
-                Agree
+            <Button 
+                onClick={handleClose}
+                color="primary" 
+                variant="contained"  
+                autoFocus
+            >
+                Aceptar
             </Button>
             </DialogActions>
       </Dialog>
