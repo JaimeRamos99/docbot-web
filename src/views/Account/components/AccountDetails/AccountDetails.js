@@ -15,7 +15,7 @@ import {
   TextField,
   InputAdornment
 } from '@material-ui/core';
-import { regPaciente, medicalInfos, getSinglePatient, createModel } from '../../../../services/api';
+import { regPaciente, medicalInfos, getSinglePatient, createModel, setAbPerimeter } from '../../../../services/api';
 import moment from 'moment';
 
 const useStyles = makeStyles(() => ({
@@ -178,17 +178,29 @@ const AccountDetails = props => {
 
   const medicalInfor = (contexto, centre_medico, diabetico,peso, altura, perimetroAbd, id) =>{
  
-    medicalInfos(contexto, centre_medico,0, diabetico,peso, altura, perimetroAbd, id, moment().format('DD/MM/YYYY'))
+    medicalInfos(contexto, centre_medico,0, diabetico,peso, altura, 0, id, moment().format('DD/MM/YYYY'))
     .then(response => {
       return response.json();
     })
     .then(json => {
+
+      setAbPerimeter( perimetroAbd, moment().format('DD/MM/YYYY'), id )
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+      
     })
     .catch(error => {
       console.log(error.message);
     });
   }
 
+ 
   const modelo = (id) =>{
     createModel(id)
     .then(response => {

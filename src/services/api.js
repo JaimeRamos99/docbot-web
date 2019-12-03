@@ -381,3 +381,28 @@ export function createModel(patient){
         body: JSON.stringify({"r": 0, "s": 0, patient})
     });
 }
+
+/**
+ * 
+ * @param {*} abdominalperimeter 
+ * @param {*} date 
+ * @param {*} patient 
+ */
+export function setAbPerimeter(abdominalperimeter , date, patient){
+    return fetch('https://api-rest-botic.herokuapp.com/api/medicalInfos/updateap',{
+        method: 'PUT',
+        body: JSON.stringify({abdominalperimeter , date, patient}),
+        headers: {'Content-Type':'application/json',}
+    });
+}
+
+/**
+ * 
+ * @param {*} id 
+ */
+export function getAbPerimeter( id){
+    return fetch('https://api-rest-botic.herokuapp.com/api/medicalInfos/getap',{
+        method: 'GET',
+        headers: {'Content-Type':'application/json','patient': id}
+    });
+}

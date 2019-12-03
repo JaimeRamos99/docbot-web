@@ -10,6 +10,12 @@ import {
   Grid,
   Divider,
   CardActionArea,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  DialogActions,
+  Button,
+  DialogContent,
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
@@ -52,67 +58,98 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SingleGoal = props => {
-  const { className, goal, ...rest } = props;
+    const { className, goal, ...rest } = props;
 
-  const classes = useStyles();
-
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
   
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    > 
-        <CardActionArea>
-            <CardContent>
-                <div className={classes.imageContainer}>
-                    <CircularProgressbar
-                        strokeWidth={3}
-                        className={classes.circular}
-                        value={((goal.progress[goal.progress.length-1].value/goal.quantity)*100).toFixed(1)}
-                        text={`${((goal.progress[goal.progress.length-1].value/goal.quantity)*100).toFixed(1)}%`}
-                        circleRatio={0.75}
-                        styles={buildStyles({
-                            rotation: 1 / 2 + 1 / 8,
-                            strokeLinecap: 'butt',
-                            trailColor: '#eee',
-                            pathColor: 'green',
-                            textColor: 'grey'
-                        })}
-                    />
-                </div>
-                <Typography 
-                    align="center"
-                    gutterBottom
-                    variant="h4"
-                    className={classes.quote}
+    <div>
+        <Card
+        {...rest}
+        className={clsx(classes.root, className)}
+        > 
+            <CardActionArea onClick={handleClickOpen}>
+                <CardContent>
+                    <div className={classes.imageContainer}>
+                        <CircularProgressbar
+                            strokeWidth={3}
+                            className={classes.circular}
+                            value={((goal.progress[goal.progress.length-1].value/goal.quantity)*100).toFixed(1)}
+                            text={`${((goal.progress[goal.progress.length-1].value/goal.quantity)*100).toFixed(1)}%`}
+                            circleRatio={0.75}
+                            styles={buildStyles({
+                                rotation: 1 / 2 + 1 / 8,
+                                strokeLinecap: 'butt',
+                                trailColor: '#eee',
+                                pathColor: 'green',
+                                textColor: 'grey'
+                            })}
+                        />
+                    </div>
+                    <Typography 
+                        align="center"
+                        gutterBottom
+                        variant="h4"
+                        className={classes.quote}
+                    >
+                        {goal.description}
+                    </Typography>
+                
+                
+                </CardContent>
+            </CardActionArea>
+            <Divider />
+            <CardActions>
+                <Grid
+                    container
+                    justify="space-between"
                 >
-                    {goal.description}
-                </Typography>
-            
-            
-            </CardContent>
-        </CardActionArea>
-        <Divider />
-        <CardActions>
-            <Grid
-                container
-                justify="space-between"
-            >
-            <Grid
-                className={classes.statsItem}
-                item
-            >
-                <AccessTimeIcon className={classes.statsIcon} />
-                <Typography
-                display="inline"
-                variant="body2"
+                <Grid
+                    className={classes.statsItem}
+                    item
                 >
-                Vence el: {goal.dueDate}
-                </Typography>
-            </Grid>
-            </Grid>
-        </CardActions>
-    </Card>
+                    <AccessTimeIcon className={classes.statsIcon} />
+                    <Typography
+                    display="inline"
+                    variant="body2"
+                    >
+                    Vence el: {goal.dueDate}
+                    </Typography>
+                </Grid>
+                </Grid>
+            </CardActions>
+        </Card>
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{goal.description}</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+                
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleClose} color="primary">
+                Disagree
+            </Button>
+            <Button onClick={handleClose} color="primary" autoFocus>
+                Agree
+            </Button>
+            </DialogActions>
+      </Dialog>
+    </div>
   );
 };
 

@@ -12,7 +12,7 @@ import { Card, CardContent,
     DialogContent,
     DialogActions,
     TextField} from '@material-ui/core';
-import { updateWeight, getWeight } from '../../../../../../services/api';
+import { updateWeight, getWeight, setAbPerimeter } from '../../../../../../services/api';
 import moment from 'moment';
 import { validate } from '@babel/types';
 
@@ -76,6 +76,17 @@ const Information = props => {
     const handleClose = () => {
       setOpen(false);
     };
+
+    const [openAb, setOpenAb] = React.useState(false);
+
+    const handleClickOpenAb = () => {
+        setOpenAb(true);
+    };
+  
+    const handleCloseAb = () => {
+        setOpenAb(false);
+    };
+    
     
     /***********************************************************************/
     const [formState, setFormState] = useState({
@@ -142,6 +153,25 @@ const Information = props => {
             .catch(error => {
                 console.log(error.message);
             });
+    
+        })
+        .catch(error => {
+            console.log(error.message);
+        });
+
+
+        handleClose();
+
+    }
+    const handlePerimetro = event =>{
+        event.preventDefault();
+        localStorage.setItem("p_abdperm", formState.values.abper)
+
+        setAbPerimeter( formState.values.abper, moment().format('DD/MM/YYYY'), localStorage.getItem("p_id") )
+        .then(response => {
+            return response.json();
+        })  
+        .then(json => {
     
         })
         .catch(error => {
@@ -240,6 +270,10 @@ const Information = props => {
                     >
                         IMC: {(localStorage.getItem('p_weight')/Math.pow(localStorage.getItem('p_height'),2)).toFixed(3)}
                     </Typography>
+                    
+                    <Button variant="outlined" color="primary" className={classes.button} onClick={handleClickOpenAb}>
+                        Perímetro abdominal: {localStorage.getItem('p_abdperm')}cm
+                    </Button>
                 </Grid>
             </Grid>
             <Divider/>
@@ -423,6 +457,66 @@ const Information = props => {
                 </Button>
                 <Button 
                     onClick={handleClose} 
+                    color="primary" 
+                    variant="contained" 
+                    autoFocus
+                >
+                    Cancelar
+                </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={openAb}
+                onClose={handleCloseAb}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"¿Desea añadir toma de perímetro abdominal?"}</DialogTitle>
+                <DialogContent>
+                <Card>
+                    <form
+                        autoComplete="off"
+                        noValidate
+                    >
+                        <CardContent>
+                            <Grid
+                                container
+                                spacing={3}
+                            >
+                                <Grid
+                                    item
+                                    sx={12}
+                                >
+                                    <TextField
+                                        fullWidth
+                                        error={hasError('peso')}
+                                        label="Perímetro abdominal"
+                                        margin="dense"
+                                        name="peso"
+                                        onChange={handleChange}
+                                        value={formState.values.abper || ''}
+                                        required
+                                        type="number"
+                                        variant="outlined"
+                                    />
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </form>
+                </Card>
+                </DialogContent>
+                <DialogActions>
+                <Button 
+                    className={classes.Button}
+                    onClick={handlePerimetro} 
+                    color="primary"
+                    disabled={!formState.isValid}
+                    variant="contained"
+                >
+                    Aceptar
+                </Button>
+                <Button 
+                    onClick={handleCloseAb} 
                     color="primary" 
                     variant="contained" 
                     autoFocus
