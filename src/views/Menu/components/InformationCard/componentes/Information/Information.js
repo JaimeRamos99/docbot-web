@@ -301,7 +301,7 @@ const Information = props => {
                         variant="h3"
                     >
                         {
-                            localStorage.getItem("p_isDiabetic") ? "SI":"NO"
+                            localStorage.getItem("p_isDiabetic") === "true" ? "SI":"NO"
                         }
                     </Typography>
                 </Grid>
@@ -492,7 +492,7 @@ const Information = props => {
                                         error={hasError('peso')}
                                         label="Perímetro abdominal"
                                         margin="dense"
-                                        name="peso"
+                                        name="abper"
                                         onChange={handleChange}
                                         value={formState.values.abper || ''}
                                         required

@@ -178,22 +178,11 @@ const AccountDetails = props => {
 
   const medicalInfor = (contexto, centre_medico, diabetico,peso, altura, perimetroAbd, id) =>{
  
-    medicalInfos(contexto, centre_medico,0, diabetico,peso, altura, 0, id, moment().format('DD/MM/YYYY'))
+    medicalInfos(contexto, centre_medico,0, diabetico, peso, altura, perimetroAbd, id, moment().format('DD/MM/YYYY'))
     .then(response => {
       return response.json();
     })
     .then(json => {
-
-      setAbPerimeter( perimetroAbd, moment().format('DD/MM/YYYY'), id )
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
-      
     })
     .catch(error => {
       console.log(error.message);
@@ -220,7 +209,7 @@ const AccountDetails = props => {
  
 
     regPaciente(name, lastName, b_date, age, idtipo, idCard, 
-      sexo, psw, email, idDoctor, "",  moment().format('DD/MM/YYYY'),"0",fumador,"")
+      sexo, psw, email, idDoctor, "",  moment().format('DD/MM/YYYY'),"0",fumador,"", false)
     .then(response => {
       return response.json();
     })

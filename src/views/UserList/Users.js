@@ -44,6 +44,7 @@ const Users = props => {
       return response.json();
     })  
     .then(json => {
+      console.log(json)
       state.data = json;
     })
     .catch(error => {

@@ -67,12 +67,12 @@ export function getCode(email){
  * @param {*} token
  */
 export function regPaciente(name, lastName, birthdate, age, documentType, documentNumber,
-     sex, password,email, doc, avatar, dateAssociation, steps, smoking, token){
+     sex, password,email, doc, avatar, dateAssociation, steps, smoking, token, logged){
     
     return fetch('https://api-rest-botic.herokuapp.com/api/patients/',{
         method: 'POST',
         body: JSON.stringify({name, lastName, birthdate, age, documentType, documentNumber, 
-            sex, password, email, doc, avatar, dateAssociation, steps, smoking, token}),
+            sex, password, email, doc, avatar, dateAssociation, steps, smoking, token, logged}),
         headers: {'Content-Type':'application/json',}
     });
     

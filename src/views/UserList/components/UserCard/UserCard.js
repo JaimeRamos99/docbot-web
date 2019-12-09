@@ -93,6 +93,7 @@ const UserCard = props => {
         return response.json();
       })  
       .then(json => {
+        console.log(json)
         var l = json.weight.length
         var w = json.weight[l-1]
         var oldv = 0
@@ -109,7 +110,7 @@ const UserCard = props => {
         localStorage.setItem('p_clinicalC', json.clinicalContext);
         localStorage.setItem('p_mecialC', json.medicalCenter);
         localStorage.setItem('p_isDiabetic', json.isDiabetic);  
-        localStorage.setItem('p_abdperm',json.abdominalperimeter[json.abdominalperimeter.length-1])
+        localStorage.setItem('p_abdperm',json.abdominalperimeter[json.abdominalperimeter.length-1].value)
         localStorage.setItem('p_wold', oldv);
         localStorage.setItem('p_height', json.height);
         localStorage.setItem('p_weight', w.value);
