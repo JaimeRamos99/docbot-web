@@ -6,7 +6,6 @@
 import theHandler from '../handlerState'
 const Base_api = theHandler.server()
 export function signIn(email, password) {
-    console.log(Base_api)
     return fetch(`${Base_api}doctors/login`, {
         method: 'POST',
         body: JSON.stringify({ email, password }),
@@ -70,7 +69,7 @@ export function getCode(email) {
  * @param {*} token
  */
 export function regPaciente(name, lastName, birthdate, age, documentType, documentNumber,
-    sex, password, email, doc, avatar, dateAssociation, steps, smoking, token, logged) {//smoking llega como undefined y perimetro abdominal no llega
+    sex, password, email, doc, avatar, dateAssociation, steps, smoking, token, logged) {
     //sugiero no pedir la edad, ya que esta se puede calcular con la fecha de nacimiento,los pasos no entiendo para que se mandan como parametro en el front si siempre van a ir en 0,el token y el logged tampoco deberían mandarse ni almacenarse en bd
     console.log("nombre: " + name)
     console.log("apellido: " + lastName)

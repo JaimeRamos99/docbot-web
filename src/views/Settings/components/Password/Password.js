@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Password = props => {
-  const { className,history, ...rest } = props;
+  const { className, history, ...rest } = props;
 
   const classes = useStyles();
 
@@ -34,13 +34,13 @@ const Password = props => {
     });
   };
 
-  
+
   /****************Acá se toma la información del usuario*********************/
   const handleChangePws = event => {
-  
-      if(values.password === values.confirm){
 
-        changePass(localStorage.getItem('email'), values.password)
+    if (values.password === values.confirm) {
+
+      changePass(localStorage.getItem('email'), values.password)
         .then(response => {
           return response.json();
         })
@@ -53,10 +53,10 @@ const Password = props => {
           console.log(error.message);
         });
 
-      }else{
-        window.confirm("Las constraseñas NO coinciden")
-      }
-  
+    } else {
+      window.confirm("Las constraseñas NO coinciden")
+    }
+
 
 
   };
@@ -98,7 +98,7 @@ const Password = props => {
           <Button
             color="primary"
             variant="outlined"
-            onClick={handleChangePws()}
+            onClick={() => { handleChangePws() }}
           >
             Actualizar
           </Button>

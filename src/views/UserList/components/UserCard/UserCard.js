@@ -87,7 +87,7 @@ const UserCard = props => {
     localStorage.setItem('p_smoking', userr.smoking);
 
     setTimeout(function(){
-
+      console.log(userr._id)
       getMedicalInfos(userr._id)
       .then(response => {
         return response.json();

@@ -222,10 +222,10 @@ const AccountDetails = props => {
           })
           .then(json => {
             setTimeout(function () {
+              let id = json.id
+              medicalInfor(contexto, centre_medico, diabetico, peso, altura, perimetroAbd, id, fumador)
 
-              medicalInfor(contexto, centre_medico, diabetico, peso, altura, perimetroAbd, json.id, fumador)
-
-              modelo(json.id)
+              modelo(id)
 
             }, 500);
           })
