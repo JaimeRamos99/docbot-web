@@ -256,13 +256,13 @@ const Information = props => {
                     xs={12}
                 >
                     <Button variant="outlined" color="primary" className={classes.button} onClick={handleClickOpen}>
-                        Peso: {localStorage.getItem('p_weight')}kg
+                        Peso: {localStorage.getItem('p_weight')} kg
                     </Button>
                     <Typography
                         className={classes.info}    
                         variant="h6"
                     >
-                        Estatura: {localStorage.getItem('p_height')}m
+                        Estatura: {localStorage.getItem('p_height')} metros
                     </Typography>
                     <Typography
                         className={classes.info}    
@@ -272,7 +272,7 @@ const Information = props => {
                     </Typography>
                     
                     <Button variant="outlined" color="primary" className={classes.button} onClick={handleClickOpenAb}>
-                        Perímetro abdominal: {localStorage.getItem('p_abdperm')}cm
+                        Perímetro abdominal: {localStorage.getItem('p_abdperm')} cm
                     </Button>
                 </Grid>
             </Grid>
@@ -336,7 +336,7 @@ const Information = props => {
                         variant="h3"
                     >
                         {
-                            localStorage.getItem("p_smoking") ? "SI":"NO"
+                            localStorage.getItem("p_smoking") === "false" ? "NO":"SI"
                         }
                     </Typography>
                 </Grid>

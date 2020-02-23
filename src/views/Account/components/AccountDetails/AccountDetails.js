@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import validate from 'validate.js';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {  withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -171,86 +171,85 @@ const AccountDetails = props => {
       }
     }));
   };
-  
+
+
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
 
-  const medicalInfor = (contexto, centre_medico, diabetico,peso, altura, perimetroAbd, id) =>{
- 
-    medicalInfos(contexto, centre_medico,0, diabetico, peso, altura, perimetroAbd, id, moment().format('DD/MM/YYYY'))
-    .then(response => {
-      return response.json();
-    })
-    .then(json => {
-    })
-    .catch(error => {
-      console.log(error.message);
-    });
-  }
+  const medicalInfor = (contexto, centre_medico, diabetico, peso, altura, perimetroAbd, id, fumador) => {
 
- 
-  const modelo = (id) =>{
-    createModel(id)
-    .then(response => {
-      return response.json();
-    })
-    .then(json => {
-        history.push("/pacientes");
-    })
-    .catch(error => {
-      console.log(error.message);
-    });
-  }
-
-  const registro = (name, lastName, b_date, age,
-    idtipo, idCard, peso, altura, sexo, psw, 
-    contexto, centre_medico, email, diabetico, idDoctor, perimetroAbd, fumador) =>{
- 
-
-    regPaciente(name, lastName, b_date, age, idtipo, idCard, 
-      sexo, psw, email, idDoctor, "",  moment().format('DD/MM/YYYY'),"0",fumador,"", false)
-    .then(response => {
-      return response.json();
-    })
-    .then(json => {
-
-      getSinglePatient(idCard)
+    medicalInfos(contexto, centre_medico, 0, diabetico, peso, altura, perimetroAbd, id, moment().format('DD/MM/YYYY'), fumador)
       .then(response => {
         return response.json();
       })
       .then(json => {
-        setTimeout(function(){
-
-          medicalInfor(contexto, centre_medico, diabetico, peso, altura, perimetroAbd, json.id) 
-        
-          modelo(json.id)
-
-        }, 500);
       })
       .catch(error => {
         console.log(error.message);
       });
-
-    })
-    .catch(error => {
-      console.log(error.message);
-    });
   }
 
 
- 
-  /***************Registro del paciente****************/
-  const handleRegister = event =>{
-    event.preventDefault();
-  
+  const modelo = (id) => {
+    createModel(id)
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        history.push("/pacientes");
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }
 
-    registro(formState.values.name, formState.values.lastName, 
+  const registro = (name, lastName, b_date, age,
+    idtipo, idCard, peso, altura, sexo, psw,
+    contexto, centre_medico, email, diabetico, idDoctor, perimetroAbd, fumador) => {
+
+
+    regPaciente(name, lastName, b_date, age, idtipo, idCard,
+      sexo, psw, email, idDoctor, "", moment().format('DD/MM/YYYY'), "0", fumador, "", false)
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+
+        getSinglePatient(idCard)
+          .then(response => {
+            return response.json();
+          })
+          .then(json => {
+            setTimeout(function () {
+
+              medicalInfor(contexto, centre_medico, diabetico, peso, altura, perimetroAbd, json.id, fumador)
+
+              modelo(json.id)
+
+            }, 500);
+          })
+          .catch(error => {
+            console.log(error.message);
+          });
+
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }
+
+  /***************Registro del paciente****************/
+  const handleRegister = event => {
+    event.preventDefault();
+
+
+    registro(formState.values.name, formState.values.lastName,
       moment(formState.values.b_day).format("DD/MM/YYYY"), formState.values.age, formState.values.tipoid, formState.values.idnumber,
       formState.values.peso, formState.values.altura,
       formState.values.sexo, formState.values.idnumber, formState.values.contexto,
       formState.values.centro_medico, formState.values.email, formState.values.isDiabetic,
-       localStorage.getItem("id"), formState.values.fumador);
+      localStorage.getItem("id"), formState.values.perimetroAbd, formState.values.fumador);
 
   }
 
@@ -262,7 +261,7 @@ const AccountDetails = props => {
       <form
         autoComplete="off"
         noValidate
-        
+
       >
         <CardHeader
           subheader="Datos personales"
@@ -280,7 +279,7 @@ const AccountDetails = props => {
               xs={12}
             >
               <TextField
-              
+
                 error={hasError('name')}
                 fullWidth
                 label="Nombres"
@@ -380,7 +379,7 @@ const AccountDetails = props => {
                 select
                 // eslint-disable-next-line react/jsx-sort-props
                 SelectProps={{ native: true }}
-                
+
                 variant="outlined"
               >
                 {id.map(option => (
@@ -418,7 +417,7 @@ const AccountDetails = props => {
           subheader="Perfil del paciente"
         />
         <CardContent>
-          <Grid 
+          <Grid
             container
             spacing={3}
           >
@@ -455,7 +454,7 @@ const AccountDetails = props => {
                 select
                 // eslint-disable-next-line react/jsx-sort-props
                 SelectProps={{ native: true }}
-                
+
                 variant="outlined"
               >
                 {diabtic.map(option => (
@@ -469,70 +468,70 @@ const AccountDetails = props => {
               </TextField>
             </Grid>
             <Grid
-                item
-                md={6}
-                xs={12}
-              >
-                <TextField
-                  fullWidth
-                  label="Peso"
-                  margin="dense"
-                  name="peso"
-                  onChange={handleChange}
-                  value={formState.values.peso || ''}
-                  required
-                  type="number"
-                  variant="outlined"
-                  InputProps={{
-                    startAdornment: <InputAdornment position="end">kg</InputAdornment>,
-                  }}
-                />
-              </Grid>
-              <Grid
-                item
-                md={6}
-                xs={12}
-              >
-                <TextField
-                  fullWidth
-                  label="Altura"
-                  margin="dense"
-                  name="altura"
-                  onChange={handleChange}
-                  value={formState.values.altura || ''}
-                  required
-                  type="number"
-                  variant="outlined"
-                  InputProps={{
-                    startAdornment: <InputAdornment position="end">m</InputAdornment>,
-                  }}
-                />
-              </Grid>
-              <Grid
-                item
-                md={6}
-                xs={12}
-              >
-                <TextField
-                  fullWidth
-                  label="Perímetro Abdominal"
-                  margin="dense"
-                  name="perimetroAbd"
-                  onChange={handleChange}
-                  value={formState.values.perimetroAbd || ''}
-                  required
-                  type="number"
-                  variant="outlined"
-                  InputProps={{
-                    startAdornment: <InputAdornment position="end">cm</InputAdornment>,
-                  }}
-                />
-              </Grid>
-              <Grid
-                item
-                md={6}
-                xs={12}
-              >
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Peso"
+                margin="dense"
+                name="peso"
+                onChange={handleChange}
+                value={formState.values.peso || ''}
+                required
+                type="number"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: <InputAdornment position="end">kg</InputAdornment>,
+                }}
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Altura"
+                margin="dense"
+                name="altura"
+                onChange={handleChange}
+                value={formState.values.altura || ''}
+                required
+                type="number"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: <InputAdornment position="end">m</InputAdornment>,
+                }}
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Perímetro Abdominal"
+                margin="dense"
+                name="perimetroAbd"
+                onChange={handleChange}
+                value={formState.values.perimetroAbd || ''}
+                required
+                type="number"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                }}
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
               <TextField
                 fullWidth
                 label="Sexo"
@@ -544,7 +543,7 @@ const AccountDetails = props => {
                 select
                 // eslint-disable-next-line react/jsx-sort-props
                 SelectProps={{ native: true }}
-                
+
                 variant="outlined"
               >
                 {sexo.map(option => (
@@ -557,11 +556,11 @@ const AccountDetails = props => {
                 ))}
               </TextField>
             </Grid>
-              <Grid
-                item
-                md={6}
-                xs={12}
-              >
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
               <TextField
                 fullWidth
                 label="¿Es fumador?"
@@ -573,7 +572,7 @@ const AccountDetails = props => {
                 select
                 // eslint-disable-next-line react/jsx-sort-props
                 SelectProps={{ native: true }}
-                
+
                 variant="outlined"
               >
                 {fumador.map(option => (
@@ -588,10 +587,10 @@ const AccountDetails = props => {
             </Grid>
           </Grid>
         </CardContent>
-        <Divider/>
+        <Divider />
         <CardContent>
           <Grid
-            container   
+            container
             spacing={3}
           >
             <Grid
@@ -599,31 +598,31 @@ const AccountDetails = props => {
               xs={12}
             >
               <TextField
-                  fullWidth
-                  error={hasError('contexto')}
-                  label="Contexto clínico en el ingreso actual"
-                  multiline
-                  rowsMax="6"
-                  name="contexto"
-                  onChange={handleChange}
-                  value={formState.values.contexto || ''}
-                  margin="normal"
-                  required
-                  variant="outlined"
-                />
+                fullWidth
+                error={hasError('contexto')}
+                label="Contexto clínico en el ingreso actual"
+                multiline
+                rowsMax="6"
+                name="contexto"
+                onChange={handleChange}
+                value={formState.values.contexto || ''}
+                margin="normal"
+                required
+                variant="outlined"
+              />
             </Grid>
           </Grid>
         </CardContent>
         <CardActions>
-            <Button
-              color="primary"
-              variant="contained"
-              fullWidth
-              onClick={handleRegister}
-              disabled={!formState.isValid}
-              size="large"
-            >
-              Crear Paciente
+          <Button
+            color="primary"
+            variant="contained"
+            fullWidth
+            onClick={handleRegister}
+            disabled={!formState.isValid}
+            size="large"
+          >
+            Crear Paciente
             </Button>
         </CardActions>
       </form>
