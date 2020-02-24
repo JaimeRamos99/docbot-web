@@ -204,39 +204,23 @@ const AccountDetails = props => {
       });
   }
 
-  const registro = (name, lastName, b_date, age,
+  async function registro(name, lastName, b_date, age,
     idtipo, idCard, peso, altura, sexo, psw,
-    contexto, centre_medico, email, diabetico, idDoctor, perimetroAbd, fumador) => {
-
-
-    regPaciente(name, lastName, b_date, age, idtipo, idCard,
-      sexo, psw, email, idDoctor, "", moment().format('DD/MM/YYYY'), "0", fumador, "", false)
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-
-        getSinglePatient(idCard)
-          .then(response => {
-            return response.json();
-          })
-          .then(json => {
-            setTimeout(function () {
-              let id = json.id
-              medicalInfor(contexto, centre_medico, diabetico, peso, altura, perimetroAbd, id, fumador)
-
-              modelo(id)
-
-            }, 500);
-          })
-          .catch(error => {
-            console.log(error.message);
-          });
-
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
+    contexto, centre_medico, email, diabetico, idDoctor, perimetroAbd, fumador) {
+    try {
+      await regPaciente(name, lastName, b_date, age, idtipo, idCard,
+        sexo, psw, email, idDoctor, "", moment().format('DD/MM/YYYY'), "0", fumador, "", false)
+        .then(response => {
+          return response.json();
+        })
+      console.log("idCard: " + idCard)
+      let r = await getSinglePatient(idCard)
+      let id = r.id
+      medicalInfor(contexto, centre_medico, diabetico, peso, altura, perimetroAbd, id, fumador)
+      modelo(id)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   /***************Registro del paciente****************/

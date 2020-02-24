@@ -19,7 +19,7 @@ import {
 } from '@material-ui/core';
 import AccessibilityIcon from '@material-ui/icons/Accessibility';
 import {  getMedicalInfos } from '../../../../services/api';
-
+import shortid from 'shortid'
 const useStyles = makeStyles(theme => ({
   root: {},
   content: {
@@ -158,7 +158,7 @@ const UserTable = props => {
                     <TableRow
                         className={classes.tableRow}
                         hover
-                        key={user.id}
+                        key={shortid.generate()}
                         selected={selectedUsers.indexOf(user.id) !== -1}
                     >
                         <TableCell>

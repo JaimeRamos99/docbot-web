@@ -15,7 +15,6 @@ import {
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import logo from '../../../../assets/logos/logo.png';
 import { getMedicalInfos } from '../../../../services/api';
-
 const useStyles = makeStyles(theme => ({
   root: {},
   imageContainer: {

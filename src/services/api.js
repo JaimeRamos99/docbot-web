@@ -102,12 +102,14 @@ export function regPaciente(name, lastName, birthdate, age, documentType, docume
  * Obtener id de un paciente
  * @param {*} documentnumber 
  */
-export function getSinglePatient(documentnumber) {
+export async function getSinglePatient(documentnumber) {
 
-    return fetch(`${Base_api}patients/buscarPaciente`, {
+    let query = await fetch(`${Base_api}patients/buscarPaciente`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'documentnumber': documentnumber }
     });
+    let queryJson = await query.json()
+    return queryJson
 }
 
 /**
