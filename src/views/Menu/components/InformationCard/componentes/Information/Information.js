@@ -277,6 +277,17 @@ const Information = props => {
                 </Grid>
             </Grid>
             <Divider/>
+            <Grid   style={{display:'flex', justifyContent:'center', paddingBottom:'5%'}}
+                    item
+                    xs={12}
+                >
+                    <Typography
+                        className={classes.infoTop}
+                        variant="h2"
+                    >
+                        Información Médica
+                    </Typography>
+                </Grid>
             <Grid
                 container
                 spacing={3}
@@ -292,6 +303,7 @@ const Information = props => {
                         El paciente es diabético:
                     </Typography>
                 </Grid>
+                
                 <Grid
                     item
                     xs={6}
@@ -305,17 +317,7 @@ const Information = props => {
                         }
                     </Typography>
                 </Grid>
-                <Grid
-                    item
-                    xs={12}
-                >
-                    <Typography
-                        className={classes.infoTop}
-                        variant="h2"
-                    >
-                        Información Médica
-                    </Typography>
-                </Grid>
+                
                 <Grid
                     item
                     xs={6}

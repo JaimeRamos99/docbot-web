@@ -68,10 +68,10 @@ export function getCode(email) {
  * @param {*} smoking
  * @param {*} token
  */
-export function regPaciente(name, lastName, birthdate, age, documentType, documentNumber,
+export async function regPaciente(name, lastName, birthdate, age, documentType, documentNumber,
     sex, password, email, doc, avatar, dateAssociation, steps, smoking, token, logged) {
     //sugiero no pedir la edad, ya que esta se puede calcular con la fecha de nacimiento,los pasos no entiendo para que se mandan como parametro en el front si siempre van a ir en 0,el token y el logged tampoco deberían mandarse ni almacenarse en bd
-    console.log("nombre: " + name)
+    /*console.log("nombre: " + name)
     console.log("apellido: " + lastName)
     console.log("fecha de nacimiento: " + birthdate)
     console.log("edad: " + age)
@@ -86,8 +86,8 @@ export function regPaciente(name, lastName, birthdate, age, documentType, docume
     console.log("steps" + steps)
     console.log("smoking" + smoking)
     console.log("token" + token)
-    console.log("logged" + logged)
-    return fetch(`${Base_api}patients/`, {
+    console.log("logged" + logged)*/
+    let query = await fetch(`${Base_api}patients/`, {
         method: 'POST',
         body: JSON.stringify({
             name, lastName, birthdate, age, documentType, documentNumber,
@@ -95,6 +95,8 @@ export function regPaciente(name, lastName, birthdate, age, documentType, docume
         }),
         headers: { 'Content-Type': 'application/json', }
     });
+    let queryJson = await query.json()
+    return queryJson
 
 }
 
@@ -211,11 +213,17 @@ export function editPatient(name, lastName, birthdate, age, documentType, docume
  * Proceso para eliminar un paciente
  * @param {*} id 
  */
-export function detelePatient(id) {
-    return fetch(`${Base_api}patients/delete`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json', 'id': id }
-    });
+export async function detelePatient(id) {
+    try {
+        let query = await fetch(`${Base_api}patients/delete`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json', 'id': id }
+        });
+        let queryJson = await query.json()
+        return queryJson
+    } catch (err) {
+        console.log("Error atrapado en delepatient " + err)
+    }
 }
 
 
