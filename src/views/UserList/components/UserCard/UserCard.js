@@ -53,9 +53,11 @@ const UserCard = props => {
     setOpen(prev => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
   };
-  async function eliminarPaciente() {
+  const eliminarPaciente = newPlacement => async (event) => {
     await detelePatient(localStorage.getItem('p_id'))
-    handleClick('bottom')
+    setAnchorEl(event.currentTarget);
+    setOpen(prev => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
   }
   const classes = useStyles();
 
@@ -196,7 +198,7 @@ const UserCard = props => {
                 <Typography className={classes.typography}>¿Está seguro que desea eliminar a este paciente?</Typography>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 10 }}>
                   <div style={{ marginLeft: 10 }}>
-                    <Button variant="contained" color="primary" onClick={() => { eliminarPaciente() }}>Confirmar</Button>
+                    <Button variant="contained" color="primary" onClick={eliminarPaciente('bottom')}>Confirmar</Button>
                   </div>
                   <div style={{ marginRight: 10 }}>
                     <Button variant="contained" color="primary" onClick={handleClick('bottom')}>Cancelar</Button>

@@ -208,27 +208,25 @@ const AccountDetails = props => {
     idtipo, idCard, peso, altura, sexo, psw,
     contexto, centre_medico, email, diabetico, idDoctor, perimetroAbd, fumador) {
     try {
-      await regPaciente(name, lastName, b_date, age, idtipo, idCard,
+      let respu = await regPaciente(name, lastName, b_date, age, idtipo, idCard,
         sexo, psw, email, idDoctor, "", moment().format('DD/MM/YYYY'), "0", fumador, "", false)
-        .then(response => {
-          return response.json();
-        })
       console.log("idCard: " + idCard)
       let r = await getSinglePatient(idCard)
       let id = r.id
       medicalInfor(contexto, centre_medico, diabetico, peso, altura, perimetroAbd, id, fumador)
       modelo(id)
+      return respu.json()
     } catch (error) {
       console.log(error)
     }
   }
 
   /***************Registro del paciente****************/
-  const handleRegister = event => {
+  const handleRegister = async (event) => {
     event.preventDefault();
 
 
-    registro(formState.values.name, formState.values.lastName,
+    await registro(formState.values.name, formState.values.lastName,
       moment(formState.values.b_day).format("DD/MM/YYYY"), formState.values.age, formState.values.tipoid, formState.values.idnumber,
       formState.values.peso, formState.values.altura,
       formState.values.sexo, formState.values.idnumber, formState.values.contexto,
