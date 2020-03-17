@@ -53,11 +53,30 @@ const UserCard = props => {
     setOpen(prev => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
   };
-  const eliminarPaciente = newPlacement => async (event) => {
-    await detelePatient(localStorage.getItem('p_id'))
+  const eliminarPaciente = newPlacement => async (event, idx) => {
+    let id = idx
+    await detelePatient(id)
     setAnchorEl(event.currentTarget);
     setOpen(prev => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
+    localStorage.removeItem('p_id');
+    localStorage.removeItem('p_Name');
+    localStorage.removeItem('p_lName');
+    localStorage.removeItem('p_medicalCenter');
+    localStorage.removeItem('p_dateAssociation');
+    localStorage.removeItem('p_birthdate');
+    localStorage.removeItem('p_documentType');
+    localStorage.removeItem('p_documentNumber');
+    localStorage.removeItem('p_weight');
+    localStorage.removeItem('p_height');
+    localStorage.removeItem('p_clinicalContext');
+    localStorage.removeItem('p_sex');
+    localStorage.removeItem('p_vtf');
+    localStorage.removeItem('p_clinicalC');
+    localStorage.removeItem('p_mecialC');
+    localStorage.removeItem('p_isDiabetic');
+    localStorage.removeItem('p_smoking');
+    localStorage.removeItem('p_wold');
   }
   const classes = useStyles();
 
@@ -198,7 +217,7 @@ const UserCard = props => {
                 <Typography className={classes.typography}>¿Está seguro que desea eliminar a este paciente?</Typography>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 10 }}>
                   <div style={{ marginLeft: 10 }}>
-                    <Button variant="contained" color="primary" onClick={eliminarPaciente('bottom')}>Confirmar</Button>
+                    <Button variant="contained" color="primary" onClick={eliminarPaciente('bottom', user._id)}>Confirmar</Button>
                   </div>
                   <div style={{ marginRight: 10 }}>
                     <Button variant="contained" color="primary" onClick={handleClick('bottom')}>Cancelar</Button>
@@ -219,5 +238,4 @@ UserCard.propTypes = {
   product: PropTypes.object.isRequired,
   user: PropTypes.any.isRequired
 };
-
 export default withRouter(UserCard);
