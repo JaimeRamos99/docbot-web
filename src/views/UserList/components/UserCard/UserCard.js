@@ -53,9 +53,8 @@ const UserCard = props => {
     setOpen(prev => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
   };
-  const eliminarPaciente = newPlacement => async (event, idx) => {
-    let id = idx
-    await detelePatient(id)
+  const eliminarPaciente = newPlacement => async (event) => {
+    await detelePatient(user._id)
     setAnchorEl(event.currentTarget);
     setOpen(prev => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
@@ -217,7 +216,7 @@ const UserCard = props => {
                 <Typography className={classes.typography}>¿Está seguro que desea eliminar a este paciente?</Typography>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 10 }}>
                   <div style={{ marginLeft: 10 }}>
-                    <Button variant="contained" color="primary" onClick={eliminarPaciente('bottom', user._id)}>Confirmar</Button>
+                    <Button variant="contained" color="primary" onClick={eliminarPaciente('bottom')}>Confirmar</Button>
                   </div>
                   <div style={{ marginRight: 10 }}>
                     <Button variant="contained" color="primary" onClick={handleClick('bottom')}>Cancelar</Button>
